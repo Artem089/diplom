@@ -1,0 +1,64 @@
+{% extends "index.html" %}
+{% block content %}
+	<div class="container py-5">
+		<div class="row mb-5 align-items-center gx-5">
+			<div class="col-12 col-lg-5">
+				<img src="{{ product.photo_file.url }}" alt="{{ product.name }}" class="img-fluid">
+			</div>
+			<div class="col-12 col-lg-7">
+				<h1 class="mb-4 fw-bold text-black">{{ product.name }}</h1>
+				<div class="d-flex gap-3 align-items-center mb-4">
+					<button class="btn btn-danger px-5 btn-lg text-uppercase fw-semibold"
+					        onclick="toCart(this, {{ product.id }})">В корзину
+					</button>
+					<span class="text-dark fs-6">Осталось на складе: <b>{{ product.count }}</b></span>
+				</div>
+				<ul class="list-group mb-4">
+					<li class="list-group-item">Категория:<b class="ms-2">{{ product.category.name }}</b></li>
+					<li class="list-group-item">Год производства:<b class="ms-2">{{ product.year }}</b></li>
+					<li class="list-group-item">Страна производства:<b class="ms-2">{{ product.coutry }}</b></li>
+				</ul>
+				<p class="fs-4 fw-bold">Описание товара:</p>
+				<div class="description mb-4">
+					{{ product.description }}
+				</div>
+			</div>
+		</div>
+		<h2 class="pt-5 mt-5 text-center fw-bold text-uppercase mb-4">Вам может понравиться</h2>
+		<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
+			{% for item in products|slice:':4' %}
+				<div class="col">
+					<div class="card">
+						<img class="product_img" src="/files/{{ item.photo_file }}" alt="Название">
+						<div class="card-body">
+							<p class="fs-5">{{ item.name }}</p>
+							<div class="my-2 mx-2"><b>Цена: </b> {{ item.price }} &#8381;</div>
+							<div class="d-flex justify-content-between">
+								<a href="/product{{ item.id }}/" class="btn btn-danger w-100">Подробнее</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+	<script>
+		toCart = async (target, pk) => {
+			const res = await fetch(`/to_cart/${ pk }`).then(res => res.json());
+			const message = res.count ? `Добавлено! В корзине: ${ res.count }` : 'Нет на складе!';
+
+			// Используйте Toastify для вывода сообщения в виде тоста
+			Toastify({
+				text: message,
+				duration: 1000, // Длительность отображения тоста в миллисекундах (здесь 3 секунды)
+				close: true, // Позволяет закрыть тост вручную
+				gravity: 'bottom', // Расположение тоста (низ страницы)
+				position: 'right', // Позиция тоста (слева)
+				backgroundColor: '#F44336', // Цвет фона тоста (красный)
+			}).showToast();
+
+			// Обновление кнопки после добавления в корзину
+			target.innerHTML = 'В корзину';
+		}
+	</script>
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends "index.html" %}
+{% block content %}
+	<div class="py-4">
+		<div class="container">
+			<div class="row popular-title">
+				<h2 class="text-center text-uppercase fw-bold mb-3">Корзина</h2>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-10 mx-auto">
+					{% if cart_items %}
+						<ul class="list-group mb-4">
+							{% for item in cart_items %}
+								<li class="list-group-item">
+									<div class="cart-item-wrapper d-flex align-items-center justify-content-between">
+										<div class="cart-item-left d-flex align-items-center">
+											<img src="{{ item.product.photo_file.url }}"
+											     alt="{{ item.product.name }}"
+											     class="cart-item-image img-thumbnail p-2">
+											<a href="/product{{ item.product.id }}/"
+											   class="ms-3 text-decoration-none text-black d-flex flex-column align-items-start">
+												<p class="fs-3 fw-semibold">{{ item.product.name }}</p>
+												<p class="text-secondary">{{ item.product.category.name }}</p>
+											</a>
+										</div>
+										<div class="cart-item-right d-flex flex-row align-items-center justify-content-end">
+											<div class="cart-item-buttons d-flex align-items-center me-5">
+												<button class="btn btn-danger fw-semibold font-monospace btn-sm rounded-start rounded-0"
+												        style="width: 35px;" onclick="remoteFromCart(this,{{ item.product.pk }})">-
+												</button>
+												<div class="cart-item-count text-center"
+												     style="">{{ item.count }}</div>
+												<button class="btn btn-danger fw-semibold font-monospace btn-sm rounded-end rounded-0"
+												        style="width: 35px;" onclick="toCart(this,{{ item.product.pk }})">+
+												</button>
+											</div>
+											<p class="fw-bold fs-4 mb-0">{{ item.product.price }} ₽ <span class="fw-normal"> / шт</span></p>
+										</div>
+									</div>
+								</li>
+							{% endfor %}
+						</ul>
+						<div class="d-flex flex-column align-items-start">
+							<div class="col-12 col-lg-4 mx-auto">
+								<input class="form-control" type="password" value="" name="password" placeholder="Введите ваш пароль">
+								<button class="btn btn-danger mt-3 px-5 d-block w-100" id="by_order">Сформировать заказ</button>
+							</div>
+						</div>
+					{% else %}
+						<p class="text-center text-secondary">Ваша корзина пуста.</p>
+						<p class="text-center"><a href="/catalog/" class="mx-auto text-black">Продолжить покупки</a></p>
+					{% endif %}
+				</div>
+			</div>
+			<h2 class="pt-5 mt-5 text-center fw-bold text-uppercase mb-4">Вам может понравиться</h2>
+			<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
+				{% for item in products|slice:':4' %}
+					<div class="col">
+						<div class="card">
+							<img class="product_img" src="/files/{{ item.photo_file }}" alt="Название">
+							<div class="card-body">
+								<p class="fs-5">{{ item.name }}</p>
+								<div class="my-2 mx-2"><b>Цена: </b> {{ item.price }} &#8381;</div>
+								<div class="d-flex justify-content-between">
+									<a href="/product{{ item.id }}/" class="btn btn-danger w-100">Подробнее</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+
+	<script>
+		document.querySelector('#by_order')?.addEventListener('click', async (event) => {
+			const password = document.querySelector('input').value;
+			const res = await fetch(`/checkout?password=${ password }`).then(res => res.json());
+			if (res.error) {
+				const message = document.createElement('div');
+				message.innerHTML = res.error;
+				event.target.parentElement.prepend(message);
+				setTimeout(() => message.remove(), 1000);
+			} else {
+				location.href = '/orders';
+			}
+		})
+		toCart = async (target, pk) => {
+			const res = await fetch(`/to_cart/${ pk }`).then(res => res.json());
+			if (res.count) {
+				target.parentElement.querySelector('.cart-item-count').innerHTML = res.count;
+			} else {
+				Toastify({
+					text: res.error,
+					duration: 2000, // Длительность отображения тоста в миллисекундах (здесь 3 секунды)
+					close: true, // Позволяет закрыть тост вручную
+					gravity: 'bottom', // Расположение тоста (низ страницы)
+					position: 'right', // Позиция тоста (слева)
+					backgroundColor: '#F44336', // Цвет фона тоста (красный)
+				}).showToast();
+			}
+		}
+		remoteFromCart = async (target, pk) => {
+			const res = await fetch(`/remove_from_cart/${ pk }`).then(res => res.json());
+			if (res.count) {
+				target.parentElement.querySelector('.cart-item-count').innerHTML = res.count;
+			} else {
+				target.closest('.list-group-item').remove();
+			}
+		}
+
+
+	</script>
+{% endblock %}

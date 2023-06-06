@@ -1,0 +1,110 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+	<div class="py-4">
+		<div class="container info_blok">
+			<div class="">
+				<a class="mx-2 text-decoration-none text-black" href="{% url 'about' %}">Главная</a>/<a
+				class="mx-2 text-decoration-none text-black"
+				href="{% url 'rate' %}">Тарифы</a>
+			</div>
+			<div class="">
+				<h2 class="text-center py-4">БАСКЕТБОЛЬНЫЙ ЦЕНТР Black - Panther</h2>
+				<img class="w-100" src="/files/СШОР.png" alt="">
+			</div>
+		</div>
+	</div>
+
+	<div class="pt-4">
+		<div class="container info_blok">
+			<div class="">
+				<h2 class="py-4">РАСПИСАНИЕ ЗАНЯТИЙ В ВОЛОГДЕ</h2>
+				<div class="accordion accordion-flush" id="accordionFlushExample">
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="flush-headingOne">
+							<button class="accordion-button collapsed fw-bold fs-4" type="button" data-bs-toggle="collapse"
+							        data-bs-target="#flush-collapseOne" aria-expanded="false"
+							        aria-controls="flush-collapseOne">
+								<h2>Дворец - спорта Вологда</h2>
+							</button>
+						</h2>
+						<div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+						     data-bs-parent="#accordionFlushExample">
+							<div class="accordion-body fs-5">
+								<b>Адрес:</b> ул. Маршала Конева, 2В,Вологда.<br>
+								<b>Тренер:</b> Шарапов А.А.<br>
+								<br>
+								<b>Группа № 1</b>
+								Возраст: 11 лет и младше<br>
+								Вторник: с 18:00 до 19:00<br>
+								Четверг: с 18:00 до 19:00<br>
+								Воскресенье: с 17:00 до 18:00<br>
+								<br>
+								<br>
+								<b>Группа № 2</b>
+								Возраст: 12 и старше<br>
+								Вторник: с 19:00 до 20:00<br>
+								Четверг: с 19:00 до 20:00<br>
+								Воскресенье: с 18:00 до 19:00
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="jumbotron" style="background-image: url('/files/Мяч.png');">
+			<div class="d-flex justify-content-center blok_tarif">
+				<img class="py-5 img-fluid " src="/files/Тарифы.png" alt="">
+			</div>
+		</div>
+
+		<div class="container-fluid bg-black">
+			<div class="container pt-4">
+				<h1 class="text-white py-4">ПЕРВОЕ ЗАНЯТИЕ БЕСПЛАТНО!</h1>
+				<div class="row">
+					<div class="col-md-6 text-center d-flex align-items-end">
+						<img src="/files/black_men.png" class="img-fluid">
+					</div>
+					<div class="col-md-6 p-4">
+						<div class="forma bg-white p-4">
+							<h1 class="fs-6">Пожалуйста, введите Ваши контактные данные для связи.</h1>
+							<form method="POST" action="{% url 'application' %}">
+								{% csrf_token %}
+								<div class="form-group py-2">
+									<input type="text"
+									       name="name"
+									       id="id_name"
+									       class="form-control"
+									       placeholder="Ваше имя"
+									       required
+									       pattern="^[а-яА-Я ]+$">
+									<div class="form-text">Только кириллица, пробелы и тире</div>
+								</div>
+								<div class="form-group py-2">
+									<input type="text"
+									       name="phone"
+									       id="id_phone"
+									       class="form-control phone-number-mask"
+									       placeholder="Ваш номер телефона"
+									       required>
+								</div>
+								<div class="form-group py-2">
+									<input type="email" name="email" id="id_email" class="form-control" placeholder="Ваш email" required>
+								</div>
+								<div class="py-2">
+									<p class="fs-6 p-0">Нажимая кнопку "отправить заявку"
+										Вы автоматически соглашаетесь с политикой конфиденциальности</p>
+								</div>
+								<button type="submit" class="btn btn-danger btn-block py-1">Oтправить заявку</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}

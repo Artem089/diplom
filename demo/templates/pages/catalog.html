@@ -1,0 +1,82 @@
+{% extends "index.html" %}
+
+{% block content %}
+	<div class="pt-4">
+		<div class="container">
+			<h2>Каталог</h2>
+			<div class="text-center mb-4">
+				{% if not request.GET.category %}
+					<a class="btn">Все</a>
+				{% else %}
+					<a class="btn" href="{% url 'catalog' %}?order_by={{ request.GET.order_by }}" data-filter="all">Все</a>
+
+				{% endif %}
+
+				{% for i in category %}
+					<a class="btn" href="{% url 'catalog' %}?category={{ i.pk }}&order_by={{ request.GET.order_by }}"
+					   data-filter="all">{{ i.name }}</a>
+				{% endfor %}
+				{% if not request.GET.order_by %}
+					<a class="btn">Cбросить </a>
+				{% else %}
+					<a class="btn" href="{% url 'catalog' %}?category={{ request.GET.category }}"
+					   data-filter="all">Cбросить </a>
+
+				{% endif %}
+				<a class="btn" href="{% url 'catalog' %}?order_by=name&category={{ request.GET.category }}"
+				   data-filter="all">По имени</a>
+				<a class="btn" href="{% url 'catalog' %}?order_by=year&category={{ request.GET.category }}"
+				   data-filter="all">По году производства</a>
+				<a class="btn" href="{% url 'catalog' %}?order_by=price&category={{ request.GET.category }}"
+				   data-filter="all">По цене</a>
+			</div>
+
+
+			<div class="row">
+				{% for item in products %}
+					<div class="col-md-3 mb-4">
+						<div class="card">
+							<img class="product_img" src="/files/{{ item.photo_file }}" alt="Название">
+							<div class="card-body">
+								<p class="fs-5">{{ item.name }}</p>
+								<div class="my-2 mx-2"><b>Цена: </b> {{ item.price }} &#8381;</div>
+								<div class="d-flex justify-content-between">
+									{% if user.is_authenticated %}
+										<a href="##" class="btn btn-danger" onclick="toCart(this, {{ item.pk }})">Добавить</a>
+										<div id="message{{ item.pk }}"></div> <!-- Элемент для отображения сообщения -->
+									{% endif %}
+									<a href="{% url 'productdetail' item.id %}" class="btn btn-danger">Подробнее</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+
+
+		<script>
+			toCart = async (target, pk) => {
+				const res = await fetch(`/to_cart/${ pk }`).then(res => res.json());
+				const message = res.count ? `Добавлено! В корзине: ${ res.count }` : 'Нет на складе!';
+
+				// Используйте Toastify для вывода сообщения в виде тоста
+				Toastify({
+					text: message,
+					duration: 1000, // Длительность отображения тоста в миллисекундах (здесь 3 секунды)
+					close: true, // Позволяет закрыть тост вручную
+					gravity: 'bottom', // Расположение тоста (низ страницы)
+					position: 'right', // Позиция тоста (слева)
+					backgroundColor: '#F44336', // Цвет фона тоста (красный)
+				}).showToast();
+
+				// Обновление кнопки после добавления в корзину
+				target.innerHTML = 'В корзину';
+			}
+
+
+		</script>
+	</div>
+
+{% endblock %}
+

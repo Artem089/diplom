@@ -1,0 +1,76 @@
+{% extends "index.html" %}
+
+
+{% block content %}
+
+	<div class="py-4">
+		<div class="container">
+			<div class="row popular-title">
+				<h1 class="text-center text-uppercase fw-bold mb-3">Заказы</h1>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-12 col-lg-10 mx-auto">
+					{% if order_list %}
+						{% for order, total in order_list %}
+							<div class="row rounded-3 shadow mb-5">
+								<div class="col-12 p-4 bg-secondary bg-opacity-10 d-flex align-items-center justify-content-between mb-4 rounded-top">
+									<span class="fs-5 fw-normal badge {% if order.status == 'new' %} bg-success {% elif order.status == 'canseled' %} bg-danger {% else %} bg-primary {% endif %}">{{ order.status_verbose }}</span>
+									<span class="fs-6 text-secondary text-end">Оформлен: <b>{{ order.date }}</b><br>№ <b>{{ order.id }}</b></span>
+								</div>
+								{% for item in order.iteminorder_set.all %}
+									<div class="row mb-4 px-4">
+										<div class="col-12 col-lg-2">
+											<img src="{{ item.product.photo_file.url }}" alt="{{ item.product.name }}" class="img-thumbnail">
+										</div>
+										<div class="col-12 col-lg-6 d-flex align-items-start flex-column justify-content-center">
+											<a href="/product{{ item.product.id }}/"
+											   class="text-dark text-decoration-none fs-3 fw-semibold mb-4">{{ item.product.name }}</a>
+											<p class="text-secondary">{{ item.product.category.name }}</p>
+										</div>
+										<div class="col-12 col-lg-4 text-end d-flex justify-content-end align-items-center">
+											<p class="fs-3 fw-bold">{{ item.product.price }} ₽ <span class="fw-normal">/ шт</span></p>
+										</div>
+									</div>
+								{% endfor %}
+								{% if order.status == 'new' %}
+									<div class="col-12 p-4 bg-secondary bg-opacity-10 d-flex align-items-center justify-content-center gap-4 rounded-bottom">
+										<a class="btn btn-danger" href="{% url 'confirm_order' order.pk %}">Оплатить заказ</a>
+										<a class="btn btn-danger" href="{% url 'delete_order' order.pk %}">Удалить заказ</a>
+									</div>
+								{% endif %}
+							</div>
+
+						{% endfor %}
+					{% else %}
+						<p class="text-center text-secondary">У Вас нет заказов</p>
+						<p class="text-center"><a href="/catalog/" class="mx-auto text-black">Продолжить покупки</a></p>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<h2 class="pt-5 mt-5 text-center fw-bold text-uppercase mb-4">Вам может понравиться</h2>
+			<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
+				{% for item in products|slice:':4' %}
+					<div class="col">
+						<div class="card">
+							<img class="product_img" src="/files/{{ item.photo_file }}" alt="Название">
+							<div class="card-body">
+								<p class="fs-5">{{ item.name }}</p>
+								<div class="my-2 mx-2"><b>Цена: </b> {{ item.price }} &#8381;</div>
+								<div class="d-flex justify-content-between">
+									<a href="/product{{ item.id }}/" class="btn btn-danger w-100">Подробнее</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+
+
+	</div>
+
+{% endblock %}

@@ -1,0 +1,139 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+	<div class="">
+		<div class="container info_blok py-4">
+			<div class="">
+				<a class="mx-2 text-decoration-none text-black" href="{% url 'about' %}">Главная</a>/<a
+				class="mx-2 text-decoration-none text-black"
+				href="{% url 'competitions' %}">Соревнования</a>
+			</div>
+			<div class="container">
+				<div class="row justify-content-between">
+					<div class="col-xl-4 col-12 blok_info_liga">
+						<h2 class="fw-bold fs-1">Лига Регион <br> ОМЛ 3х3</h2>
+						<p class="fs-5">Почему вам обязательно стоит присоединиться к лиге, если ваш ребенок еще не в
+							команде? Сейчас расскажем!</p>
+					</div>
+					<div class="col-xl-6 col-12">
+						<img src="/files/competention.png" class="img-fluid">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid px-0">
+			<div class="row px-0 gx-0">
+				<div class="col-lg-6">
+					<img class="w-100" src="/files/эмоции.png" alt="your image">
+				</div>
+				<div class="col-lg-6 d-flex flex-column justify-content-center blok_info_compentention ">
+					<h1 class="fs-1">Лига Регион ОМЛ <br> это <b>ЭМОЦИИ</b></h1>
+					<p class="fs-4">Первые забитые мячи, первые победы - это невероятные и незабываемые эмоции как для
+						детей так и для родителей, с каждой игрой все более заметен прогресс в баскетбольных навыках
+						ребенка.</p>
+				</div>
+			</div>
+
+			<div class="row flex-column-reverse flex-lg-row px-0 gx-0">
+				<div class="col-lg-6 d-flex flex-column justify-content-center blok_info_compentention ">
+					<h1 class="fs-1">Лига Регион ОМЛ <br> это <b>ИГРОВОЙ ОПЫТ</b></h1>
+					<p class="fs-4">Участвуя в матчах Лиги, ребенок понимает, что тренируется не зря. Он
+						использует навыки, которые они вместе с тренером отрабатывают на тренировках. Это дает мотивацию
+						становиться еще лучше!</p>
+				</div>
+				<div class="col-lg-6 ">
+					<img class="w-100" src="/files/ИгровойОпыт.png" alt="your image">
+				</div>
+			</div>
+
+			<div class="row px-0 gx-0">
+				<div class="col-lg-6">
+					<img class="w-100" src="/files/Перспективы.png" alt="your image">
+				</div>
+				<div class="col-lg-6 d-flex flex-column justify-content-center blok_info_compentention ">
+					<h1 class="fs-1">Лига Регион ОМЛ <br> это <b>ПЕРСПЕКТИВЫ</b></h1>
+					<p class="fs-4">Вначале ребенок набирается игрового опыта и проявляет себя в матчах лиги,
+						затем он может попасть в сборную команду Black Panther и выйти на новый уровень!</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid bg-black">
+			<div class="container pt-4">
+				<h1 class="text-white py-4">ПЕРВОЕ ЗАНЯТИЕ БЕСПЛАТНО!</h1>
+				<div class="row">
+					<div class="col-md-6 text-center d-flex align-items-end">
+						<img src="/files/black_men.png" class="img-fluid">
+					</div>
+					<div class="col-md-6 p-4">
+						<div class="forma bg-white p-4">
+							<h1 class="fs-6">Пожалуйста, введите Ваши контактные данные для связи.</h1>
+							<form method="POST" action="{% url 'application' %}">
+								{% csrf_token %}
+								<div class="form-group py-2">
+									<input type="text"
+									       name="name"
+									       id="id_name"
+									       class="form-control"
+									       placeholder="Ваше имя"
+									       required
+									       pattern="^[а-яА-Я ]+$">
+									<div class="form-text">Только кириллица, пробелы и тире</div>
+								</div>
+								<div class="form-group py-2">
+									<input type="text"
+									       name="phone"
+									       id="id_phone"
+									       class="form-control phone-number-mask"
+									       placeholder="Ваш номер телефона"
+									       required>
+								</div>
+								<div class="form-group py-2">
+									<input type="email" name="email" id="id_email" class="form-control" placeholder="Ваш email" required>
+								</div>
+								<div class="py-2">
+									<p class="fs-6 p-0">Нажимая кнопку "отправить заявку"
+										Вы автоматически соглашаетесь с политикой конфиденциальности</p>
+								</div>
+								<button type="submit" class="btn btn-danger btn-block py-1">Oтправить заявку</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid px-0">
+			<div class="row px-0 gx-0">
+				<div class="col-lg-6 d-flex flex-column justify-content-center blok_info_compentention ">
+					<h1 class="fs-1">Лига Регион ОМЛ <br> это <b>ОБЪЕДИНЕНИЕ</b></h1>
+					<p class="fs-4">Находясь в команде, дети чувствуют атмосферу настоящего баскетбола! Так здорово, когда
+						родители поддерживают с трибун, проводят время вместе с детьми и радуются их успехам.</p>
+				</div>
+				<div class="col-lg-6 ">
+					<img class="w-100" src="/files/ОБЪЕДИНЕНИЕ.png" alt="your image">
+				</div>
+			</div>
+
+			<div class="row px-0 gx-0">
+				<div class="col-lg-6">
+					<img class="w-100" src="/files/ВПЕЧАТЛЕНИЯ.png" alt="your image">
+				</div>
+				<div class="col-lg-6 d-flex flex-column justify-content-center blok_info_compentention ">
+					<h1 class="fs-1">Лига Регион ОМЛ <br> это <b>ВПЕЧАТЛЕНИЯ</b></h1>
+					<p class="fs-4">В конце каждого сезона ребят ждут финалы Лиги, это незабываемое событие и праздник для
+						всех и каждого! Именно здесь решается кому достанется кубок в этом сезоне!</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="claim_liga py-3 d-flex justify-content-center align-items-center">
+			<a class="px-3 fs-1 text-decoration-none text-white fw-bold" href="{% url 'about' %}">ПРИCОЕДЕНИТЬСЯ К
+				ЛИГЕ!</a><img
+			class="fw-bold"
+			src="/files/Arrow 1.png" alt="">
+		</div>
+	</div>
+{% endblock %}
