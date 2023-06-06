@@ -1,0 +1,153 @@
+body, html {
+  height: 100vh;
+}
+
+.wrapper {
+  min-height: 100%;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+main.main {
+  flex: 1 1 auto
+}
+
+.cart-item-image {
+  height: 120px;
+  object-fit: contain;
+  object-position: center;
+}
+
+.cart-item-count {
+  width: 40px;
+  border-top: 1px solid #999;
+  border-bottom: 1px solid #999;
+  padding: 0.18rem 0
+}
+
+.nav-link {
+  color: black;
+}
+
+.text-container {
+  max-width: 700px;
+}
+
+.container-login {
+  width: 100%;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background: #F2F2F2;
+}
+
+.wrap-login {
+  width: 390px;
+  background: #FFF;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 55px 55px 33px;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+  -moz-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+  -webkit-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+  -o-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+  -ms-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+}
+
+.container-register {
+  width: 100%;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background: #F2F2F2;
+}
+
+.wrap-register {
+  width: 500px;
+  background: #FFF;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 55px 55px 33px;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+  -moz-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+  -webkit-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+  -o-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+  -ms-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+}
+
+.accordion-button::after {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: auto;
+  content: '';
+  background-image: url(/files/plus.png) !important;
+  background-repeat: no-repeat;
+  background-size: 1.25rem;
+  transition: transform .2s ease-in-out;
+}
+
+
+.accordion-button:not(.collapsed) {
+  color: black !important;
+  background-color: transparent !important;
+  box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
+}
+
+.accordion-button:focus {
+  z-index: 3;
+  border-color: white !important;
+  outline: 0;
+  box-shadow: none !important;
+}
+
+.blok_info_liga {
+  padding-top: 150px;
+}
+
+.accordion-item {
+  color: var(--bs-accordion-color);
+  background-color: var(--bs-accordion-bg);
+  border: none !important;
+}
+
+.accordion-item {
+  border-radius: 10px !important;
+}
+
+.blok_info_compentention {
+  padding: 0px 100px !important;
+}
+
+.blok_info_compentention h1 {
+  font-size: 46px;
+}
+
+.claim_liga {
+  background-color: #B70404;
+}
+
+.product_my {
+
+}
+
+
+.product_img {
+  height: 300px;
+}
+
